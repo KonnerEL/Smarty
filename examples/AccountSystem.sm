@@ -1,0 +1,21 @@
+Account:{Balance:decimal}
+
+@event transfer_to:
+    @args[from,to,amount]
+    @subjects[Account]
+    @pre amount > 0.0
+    @fails "Negative Transaction Amount"
+    @pre from.Balance >= amount
+    @fails "Insufficient Funds"
+    @action from.Balance := from.Balance - amount
+    @action to.Balance := to.Balance + amount
+
+@create_Account:
+    @args[Name,initial_balance]
+    @invariant initial_balance > 0.0
+    @warning "Initial balance must be >= 0"
+
+create_Account [Jose,100.25]
+create_Account [Nestor,250.0]
+Jose transfer_to Nestor [25.0]
+get_info[Jose]

@@ -1,0 +1,24 @@
+Votante:{Name:string,Voted:bool}
+Candidato:{Name:string,Votos:integer}
+
+@event voted_for:
+    @args[votante,candidato]
+    @subjects[Votante => Candidato]
+    @pre votante.Voted != true 
+    @fails "El Votante ya ha votado"
+    @action votante.Voted := true
+    @action candidato.Votos := candidato.Votos + 1
+
+@create_Votante:
+    @args[Name,Voted]
+
+@create_Candidato:
+    @args[Name,Votos]    
+
+create_Votante [Andres,false]
+create_Votante [Jose,false]
+create_Votante [Juan,false]
+create_Candidato [Nestor,0]
+Andres voted_for Nestor
+Jose voted_for Nestor
+Juan voted_for Nestor
