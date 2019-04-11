@@ -22,7 +22,7 @@ public class PactTable {
     
     public String Compile() {
         String space = "";
-        for (int i = 0; i <= Indentation; i++) {
+        for (int i = 1; i <= Indentation; i++) {
             space = space + " ";
         }
         ST Table = new ST(space + "(deftable <Name>_table:{<Name>})");

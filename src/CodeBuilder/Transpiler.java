@@ -150,7 +150,7 @@ public class Transpiler extends SmartyBaseListener{
         Program = Struc.Compile();
         String Lisp_Functions = "";
         for (int i = 0; i < Create_Events.size(); i++) {
-            Lisp_Functions += processCreate_Events(Create_Events.get(i), Create_EventsParameters.get(i), Invariants.get(i));              
+            Lisp_Functions += processCreate_Events(Create_Events.get(i), Create_EventsParameters.get(i), Invariants.get(i)) + "\n";              
         }
         Lisp_Functions += "\n\n";
         for (int i = 0; i < Custom_Events.size(); i++) {
@@ -220,14 +220,14 @@ public class Transpiler extends SmartyBaseListener{
             Attributes = Attributes + " }";
             Attributes2 = Attributes2 + " }";
             PactAtom PR = new PactAtom(Entities.get(i) + "_table " + Args.get(i) + " " + Attributes, "");
-            if (i == 0) PR.setIndentation(3);
-            else PR.setIndentation(4);
+            if (i == 0) PR.setIndentation(2);
+            else PR.setIndentation(3);
             PR.chooseCoreFunction(2);
             //String Compile = PR.Compile();
             //System.out.println(Compile);
             Lisp_Reads.add(PR.Compile());
             PactAtom PU = new PactAtom(Entities.get(i) + "_table " + Args.get(i), Attributes2);
-            PU.setIndentation(5);
+            PU.setIndentation(4);
             PU.chooseCoreFunction(3);
             Lisp_Updates.add(PU.Compile());
         }
@@ -257,7 +257,7 @@ public class Transpiler extends SmartyBaseListener{
             String precondition = Recursive.convertToLispExpression(Aux, 0, "");
             String exception = Precs.get(i).getException();
             PactAtom PA = new PactAtom(precondition, exception);
-            PA.setIndentation(5);
+            PA.setIndentation(4);
             PA.chooseCoreFunction(5);
             Lisp_Preconditions.add(PA.Compile());
         }
@@ -301,7 +301,7 @@ public class Transpiler extends SmartyBaseListener{
                 String invariant = Recursive.convertToLispExpression(Aux, 0, "");
                 String exception = Invs.get(i).getException();
                 PactAtom PA = new PactAtom(invariant, exception);
-                PA.setIndentation(2);
+                PA.setIndentation(1);
                 PA.chooseCoreFunction(5);
                 Lisp_Invariants.add(PA.Compile());
             }    
@@ -316,7 +316,7 @@ public class Transpiler extends SmartyBaseListener{
         }
         Attributes = Attributes + "}";
         PactAtom PI = new PactAtom(searchEntity + "_table" + " " + Args.get(0), Attributes);
-        PI.setIndentation(3);
+        PI.setIndentation(2);
         PI.chooseCoreFunction(4);
         PactFunction PF = new PactFunction(Event, Args, String.join("\n", Lisp_Invariants) + "\n" + PI.Compile());
         

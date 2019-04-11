@@ -34,7 +34,7 @@ public class PactAtom {
     public void chooseCoreFunction(int i) {
         ST Function = null;
         String space = "";
-        for (int j = 1; j < Indentation; j++) {
+        for (int j = 1; j <= Indentation; j++) {
             space = space + " ";
         }
         switch(i) {
