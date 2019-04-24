@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import Pact.*;
 import Utils.*;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.LinkedHashMap;
 
 /**
@@ -118,17 +117,6 @@ public class Transpiler extends SmartyBaseListener{
         });
         Invariants.add(Invs);
     }
-
-    /*@Override
-    public void exitGet_info(SmartyParser.Get_infoContext ctx) {
-        Events.add("get_info");
-        ArrayList<String>Params = new ArrayList<>();
-        ctx.argument().Identifier().forEach(arg -> Params.add(arg.getText()));
-        EventsParameters.add(Params);
-        List<String>Subjs = new ArrayList<>();
-        ctx.subjects().Identifier().forEach(subject -> Subjs.add(subject.getText()));
-        RelationatedEntities.add(Subjs);
-    }*/
     
     @Override
     public void exitInvoke(SmartyParser.InvokeContext ctx) {

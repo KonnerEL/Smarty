@@ -22,3 +22,4 @@ create_Candidato [Nestor,0]
 Andres voted_for Nestor
 Jose voted_for Nestor
 Juan voted_for Nestor
+get_info_Candidato [Nestor]
