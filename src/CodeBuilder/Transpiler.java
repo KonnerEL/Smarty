@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Pact.*;
 import Utils.*;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.LinkedHashMap;
 
 /**
@@ -23,8 +24,10 @@ public class Transpiler extends SmartyBaseListener{
     List<List<String>>EntityTypes;
     List<String>Custom_Events;
     List<String>Create_Events;
+    List<String>Getter_Events;
     List<List<String>>Custom_EventsParameters;
     List<List<String>>Create_EventsParameters;
+    List<List<String>>Getter_EventsParameters;
     List<List<String>>RelationatedEntities;
     List<List<Precondition>>Preconditions;
     List<List<Action>>Actions;
@@ -39,8 +42,10 @@ public class Transpiler extends SmartyBaseListener{
         EntityTypes = new ArrayList<>();
         Custom_Events = new ArrayList<>();
         Create_Events = new ArrayList<>();
+        Getter_Events = new ArrayList<>();
         Custom_EventsParameters = new ArrayList<>();
         Create_EventsParameters = new ArrayList<>();
+        Getter_EventsParameters = new ArrayList<>();
         RelationatedEntities = new ArrayList<>();
         Preconditions = new ArrayList<>();
         Actions = new ArrayList<>();
@@ -128,6 +133,7 @@ public class Transpiler extends SmartyBaseListener{
     @Override
     public void exitInvoke(SmartyParser.InvokeContext ctx) {
         Invoked_Events.add(ctx.Identifier().getText());
+        
         List<String>Values = new ArrayList<>();
         if (ctx.value().size() > 0) {
             ctx.value().forEach(val -> {
@@ -137,10 +143,14 @@ public class Transpiler extends SmartyBaseListener{
         }
         if (ctx.invocation_argument() != null) {
             ctx.invocation_argument().value().forEach(val -> {
-                if (val.Identifier() != null) Values.add("\"" + val.getText() + "\"");               
+                if (val.Identifier() != null) Values.add("\"" + val.getText() + "\"");          
                 else Values.add(val.getText());
             });
         }
+        if (ctx.Identifier().getText().contains("get_info_")) {
+            Getter_Events.add(ctx.Identifier().getText());
+            Getter_EventsParameters.add(Values);
+        } 
         Events_Values.add(Values);
     }
     
@@ -156,12 +166,17 @@ public class Transpiler extends SmartyBaseListener{
         for (int i = 0; i < Custom_Events.size(); i++) {
             Lisp_Functions += processCustom_Events(Custom_Events.get(i), Custom_EventsParameters.get(i), RelationatedEntities.get(i), Preconditions.get(i), Actions.get(i));
         }
-        Program += "\n" + Module.Compile(processSchemas(), processTables(), Lisp_Functions) + "\n\n";
+        String getter_Functions = "";
+        for (int i = 0; i < Getter_Events.size(); i++) {
+            getter_Functions += processGetter_Events(Getter_Events.get(i), Getter_EventsParameters.get(i));
+        }
+        Program += "\n" + Module.Compile(processSchemas(), processTables(), Lisp_Functions + "\n\n" + getter_Functions) + "\n\n";
         String createTables = "";
         for (int i = 0; i < Entity.size(); i++) {
             createTables += "(create-table " + Entity.get(i) + "_table" + ")" + "\n";
         }
         Program += createTables + processInvokes();
+        
     }
 
     public String processSchemas() {
@@ -219,7 +234,7 @@ public class Transpiler extends SmartyBaseListener{
             Attributes2 = Attributes2.substring(0, Attributes2.lastIndexOf(","));
             Attributes = Attributes + " }";
             Attributes2 = Attributes2 + " }";
-            PactAtom PR = new PactAtom(Entities.get(i) + "_table " + Args.get(i) + " " + Attributes, "");
+            PactAtom PR = new PactAtom(Entities.get(i) + "_table " + Args.get(i), Attributes);
             if (i == 0) PR.setIndentation(2);
             else PR.setIndentation(3);
             PR.chooseCoreFunction(2);
@@ -320,6 +335,56 @@ public class Transpiler extends SmartyBaseListener{
         PI.chooseCoreFunction(4);
         PactFunction PF = new PactFunction(Event, Args, String.join("\n", Lisp_Invariants) + "\n" + PI.Compile());
         
+        return PF.Compile();
+    }
+    
+    public String processGetter_Events(String Event, List<String>Args) {
+        String Entity = Event.substring(Event.lastIndexOf("_") + 1);
+        List<String>Lisp_Reads = new ArrayList<>();
+        String format = "\" ";
+        String Lisp_List_Format = "[";
+        int lastIndentation = 0;
+        List<String>Subjects = new ArrayList<>();
+        for (int i = 0; i < Args.size(); i++) {
+            String Subject = "ID" + (i + 1);
+            Subjects.add(Subject);
+            int index = Entity.indexOf(Entity);
+            List<String> EntityAtts = EntityAttributes.get(index);
+            String Attributes = "{";
+            Lisp_List_Format += Subject;
+            format += "{} - ";
+            for (int j = 1; j < EntityAtts.size(); j++) {
+                Attributes += "\"" + EntityAtts.get(j) + "\"" + " := " + Subject + "_" + EntityAtts.get(j) + ",";
+                format += "{} - ";
+                Lisp_List_Format += "," + Subject + "_" + EntityAtts.get(j) + ",";
+            }
+            format = format.substring(0, format.lastIndexOf("-"));
+            format += "\\n ";
+            Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
+            //} 
+            Attributes += "}";
+            PactAtom PW = new PactAtom(Entity + "_table" + " " + Subject, Attributes);
+            PW.setIndentation(i + 2);
+            PW.chooseCoreFunction(2);
+            Lisp_Reads.add(PW.Compile());
+            
+            if ((i + 1) == Args.size()) lastIndentation = (i + 1) + 2;
+        }
+        format = format.substring(0, format.lastIndexOf("\\n"));
+        format += "\""; 
+        Lisp_List_Format = Lisp_List_Format.substring(0, Lisp_List_Format.lastIndexOf(","));
+        Lisp_List_Format += "]";
+        PactAtom PFt = new PactAtom(format, Lisp_List_Format);
+        PFt.setIndentation(lastIndentation);
+        PFt.chooseCoreFunction(1);
+        
+        String output = "";
+        output += Lisp_Reads.get(0);
+        for (int i = 1; i < Lisp_Reads.size(); i++) {
+            output = Parenthesis.insertBeforeFirstClosedParenthesis(output, Lisp_Reads.get(i));
+        }
+        output = Parenthesis.insertBeforeFirstClosedParenthesis(output, PFt.Compile());
+        PactFunction PF = new PactFunction(Event, Subjects, output);
         return PF.Compile();
     }
 

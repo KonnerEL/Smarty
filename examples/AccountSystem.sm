@@ -1,4 +1,4 @@
-Account:{Balance:decimal}
+Account:{Name:string,Balance:decimal}
 
 @event transfer_to:
     @args[from,to,amount]
@@ -18,4 +18,4 @@ Account:{Balance:decimal}
 create_Account [Jose,100.25]
 create_Account [Nestor,250.0]
 Jose transfer_to Nestor [25.0]
-get_info[Jose]
+get_info_Account [Nestor, Jose]
