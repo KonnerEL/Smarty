@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="master-pane" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller">
+   
+   <top>
+       <MenuBar prefHeight="25.0" prefWidth="600.0" stylesheets="@Stylesheet.css" BorderPane.alignment="CENTER">
+           <Menu text="File">
+               <MenuItem fx:id="newFile" mnemonicParsing="false" onAction="#newFile" text="New">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                   </accelerator>
+               </MenuItem>
+               <MenuItem fx:id="openFile" mnemonicParsing="false" onAction="#openFile" text="Open">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                   </accelerator>
+               </MenuItem>
+               <MenuItem fx:id="save" onAction="#save" text="Save">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                   </accelerator>
+               </MenuItem>
+               <SeparatorMenuItem mnemonicParsing="false" />
+               <MenuItem id="close" mnemonicParsing="false" onAction="#exit" text="Close" />
+           </Menu>
+           <Menu mnemonicParsing="false" text="Edit">
+            <items>
+               <Menu mnemonicParsing="false" text="Font">
+                  <items>
+                     <CheckMenuItem fx:id="Consolas" mnemonicParsing="false" onAction="#fontFace" text="Consolas" />
+                     <CheckMenuItem fx:id="Courier" mnemonicParsing="false" onAction="#fontFace" text="Courier New" />
+                  </items>
+               </Menu>
+               <Menu mnemonicParsing="false" text="Size">
+                  <items>
+                     <CheckMenuItem fx:id="small" mnemonicParsing="false" onAction="#fontSize" text="Small ( 14px )" />
+                     <CheckMenuItem fx:id="default" mnemonicParsing="false" onAction="#fontSize" text="Default ( 22px )" />
+                     <CheckMenuItem fx:id="large" mnemonicParsing="false" onAction="#fontSize" text="Large ( 30px )" />
+                  </items>
+               </Menu>
+            </items></Menu>
+           <Menu mnemonicParsing="false" text="Info">
+               <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+           </Menu>
+       </MenuBar>
+   </top>
+   <center>
+      <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="textArea1" prefHeight="281.0" prefWidth="189.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets left="12.0" />
+               </HBox.margin>
+            </TextArea>
+            <TextArea fx:id="textArea2" nodeOrientation="LEFT_TO_RIGHT" prefHeight="265.0" prefWidth="190.0" styleClass="editor-text" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="SansSerif Regular" size="15.0" />
+               </font>
+               <effect>
+                  <InnerShadow choke="0.46" color="#010103" height="19.4" radius="7.375" width="12.1" />
+               </effect>
+               <HBox.margin>
+                  <Insets left="12.0" right="12.0" />
+               </HBox.margin>
+            </TextArea>
+            <TextArea fx:id="textArea3" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="12.0" />
+               </HBox.margin>
+            </TextArea>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#Transpile" text="Transpile" />
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#ShowST" text="Arbol Sintáctico" textOverrun="CLIP" wrapText="true" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
