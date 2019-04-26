@@ -16,14 +16,13 @@ field
 event
     : custom_event  
     | insert_object
-    | get_info  
     ;
 
 custom_event
     : '@event' Identifier ':' 
-        argument
-        entities
-        precondition+
+        argument?
+        entities?
+        precondition*
         action+ 
         postcondition*
     ;
@@ -81,11 +80,12 @@ condition
     ;
 
 statement
-    : left_Side ':=' right_Side (Arithmetic_Operator right_Side)*
+    : left_Side ((':=' right_Side (Arithmetic_Operator right_Side)*) | StringLiteral)
     ;    
 
 left_Side
     : (Identifier('.'Identifier)?)
+    | Write
     ;
 
 right_Side
@@ -102,7 +102,7 @@ value
 
 invoke
     : value Identifier value invocation_argument? 
-    | Identifier invocation_argument
+    | Identifier invocation_argument?
     ;  
 
 invocation_argument

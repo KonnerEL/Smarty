@@ -36,9 +36,9 @@ public class PactFunction {
         );
         String Args = "";
         for (String Param: Arguments) {
-            Args = Args + Param + " ";
+            if (Param != null) Args = Args + Param + " ";
         }
-        Args = Args.substring(0, Args.lastIndexOf(" "));
+        if (Args.contains(" ")) Args = Args.substring(0, Args.lastIndexOf(" "));
         Function.add("Name", Name);
         Function.add("Arguments", Args);
         Function.add("Body", Body);

@@ -10,7 +10,7 @@ package Utils;
  * @author KonnerEL
  */
 public class Recursive {
-      public static String convertToLispExpression(String string, int i, String output) {
+      public static String convertToLispExpression(String string, int i, String output) {  
         if (i == string.length()) return output;
         else {
             int index = getIndexOfOperator(string, i);
