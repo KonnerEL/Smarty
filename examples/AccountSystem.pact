@@ -30,8 +30,8 @@
     )
  )
 
-(create-table Account_table)
-(create_Account "Jose" 100.25)
-(create_Account "Nestor" 250.0)
-(transfer_to "Jose" "Nestor" 25.0)
-(get_info_Account "Nestor" "Jose")
+( create-table Account_table )
+( create_Account "Jose" 100.25)
+( create_Account "Nestor" 250.0)
+( transfer_to "Jose" "Nestor" 25.0)
+( get_info_Account "Nestor" "Jose")

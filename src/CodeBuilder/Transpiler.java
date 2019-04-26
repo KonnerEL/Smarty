@@ -255,13 +255,16 @@ public class Transpiler extends SmartyBaseListener{
                         PA.chooseCoreFunction(1);
                         Lisp_Write = PA.Compile();
                     } else {
+                        String Aux = Acts.get(j).getLeft_Side().substring(Acts.get(j).getLeft_Side().lastIndexOf(".") + 1);
                         if (Acts.get(j).getLeft_Side().contains(Args.get(i))) {
-                            String Aux = Acts.get(j).getLeft_Side().substring(Acts.get(j).getLeft_Side().lastIndexOf(".") + 1);
-                            Attributes = Attributes + "\"" + Aux + "\"";
-                            Attributes2 = Attributes2 + "\"" + Aux + "\"";
-                            Attributes = Attributes + " := " + Args.get(j) + "_" + Aux;
-                            Attributes = Attributes + ",";
-                            Aux = Args.get(j) + "_" + Aux;
+                            Attributes2 = Attributes2 + "\"" + Aux + "\""; 
+                            int index = Entity.indexOf(Entities.get(i));
+                            if (!Aux.equals(EntityAttributes.get(index).get(0))) {
+                                Attributes = Attributes + "\"" + Aux + "\"";
+                                Attributes = Attributes + " := " + Args.get(i) + "_" + Aux;
+                                Attributes = Attributes + ",";
+                            }
+                            Aux = Args.get(i) + "_" + Aux;
                             String currentAction = Acts.get(j).toString().replace(Acts.get(i).getLeft_Side(), Aux);
                             currentAction = currentAction.substring(currentAction.indexOf("=") + 2, currentAction.length());
                             if (Recursive.getIndexOfOperator(currentAction, i) == currentAction.length()) {
@@ -418,7 +421,7 @@ public class Transpiler extends SmartyBaseListener{
     }
     
     public String processGetter_Events(String Event, List<String>Args) {
-        String Entity = Event.substring(Event.lastIndexOf("_") + 1);
+        String Ent = Event.substring(Event.lastIndexOf("_") + 1);
         List<String>Lisp_Reads = new ArrayList<>();
         String format = "\" ";
         String Lisp_List_Format = "[";
@@ -427,7 +430,7 @@ public class Transpiler extends SmartyBaseListener{
         for (int i = 0; i < Args.size(); i++) {
             String Subject = "ID" + (i + 1);
             Subjects.add(Subject);
-            int index = Entity.indexOf(Entity);
+            int index = Entity.indexOf(Ent);
             List<String> EntityAtts = EntityAttributes.get(index);
             String Attributes = "{";
             Lisp_List_Format += Subject;
@@ -442,7 +445,7 @@ public class Transpiler extends SmartyBaseListener{
             Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
             //} 
             Attributes += "}";
-            PactAtom PW = new PactAtom(Entity + "_table" + " " + Subject, Attributes);
+            PactAtom PW = new PactAtom(Ent + "_table" + " " + Subject, Attributes);
             PW.setIndentation(i + 2);
             PW.chooseCoreFunction(2);
             Lisp_Reads.add(PW.Compile());

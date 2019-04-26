@@ -20,7 +20,7 @@
     )
     (defun create_Candidato (Name Votos)
 
-      (insert Candidato_table Name {"Votos": 0,"Name": name})
+      (insert Candidato_table Name {"Votos": 0})
     )
 
 
@@ -29,8 +29,7 @@
        (with-read Candidato_table candidato {"Votos" := candidato_Votos }
 
         (update Votante_table votante {"Voted": true })
-        (update Candidato_table candidato {"Votos": (+ candidato_Votos 1) })))
-        (format "Hello" [])
+        (update Candidato_table candidato {"Votos": (+ candidato_Votos 1),"Name": "Candidato" })))
     )
 
 
