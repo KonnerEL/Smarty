@@ -9,6 +9,10 @@ Account:{Name:string,Balance:decimal}
     @fails "Insufficient Funds"
     @action from.Balance := from.Balance - amount
     @action to.Balance := to.Balance + amount
+    @post @after.from.Balance = @before.from.Balance - amount
+    @reverts
+    @post @after.to.Balance = @before.to.Balance + amount
+    @reverts
 
 @create_Account:
     @args[Name,initial_balance]

@@ -68,7 +68,8 @@ action
     ;
 
 postcondition
-    : '@post' condition    
+    : '@post' condition
+      '@reverts'?    
     ;
 
 exceptionHandler
@@ -84,13 +85,13 @@ statement
     ;    
 
 left_Side
-    : (Identifier('.'Identifier)?)
+    : '@after.'? (Identifier('.'Identifier)?(Arithmetic_Operator right_Side)*)
     | Write
     ;
 
 right_Side
     : value
-    | (Identifier('.'Identifier)?)
+    | '@before.'? (Identifier('.'Identifier)?(Arithmetic_Operator right_Side)*)
     ; 
 
 value

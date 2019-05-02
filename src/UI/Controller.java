@@ -91,7 +91,7 @@ public class Controller implements Initializable {
             if (file != null) {
                 PrintWriter savedText = new PrintWriter(file);
                 BufferedWriter out = new BufferedWriter(savedText);
-                out.write(textArea1.getText());
+                out.write(textArea2.getText());
                 out.close();
             }
         } catch (FileNotFoundException e) {
