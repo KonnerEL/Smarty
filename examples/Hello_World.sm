@@ -1,0 +1,4 @@
+@event hello_world:
+  @action Write "Hello World"
+
+hello_world

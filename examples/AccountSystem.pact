@@ -15,8 +15,8 @@
 
 
     (defun transfer_to (from to amount)
-      (with-read Account_table from {"Balance" := from_Balance }
-       (with-read Account_table to {"Balance" := to_Balance }
+      (with-read Account_table from {"Balance" := from_Balance}
+       (with-read Account_table to {"Balance" := to_Balance}
         (enforce (> amount 0.0) "Negative Transaction Amount")
         (enforce (>= from_Balance amount) "Insufficient Funds")
         (update Account_table from {"Balance": (- from_Balance amount) })

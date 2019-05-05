@@ -258,30 +258,29 @@ public class Transpiler extends SmartyBaseListener{
                         String Aux = Acts.get(j).getLeft_Side().substring(Acts.get(j).getLeft_Side().lastIndexOf(".") + 1);
                         if (Acts.get(j).getLeft_Side().contains(Args.get(i))) {
                             Attributes2 = Attributes2 + "\"" + Aux + "\""; 
-                            int index = Entity.indexOf(Entities.get(i));
-                            if (!Aux.equals(EntityAttributes.get(index).get(0))) {
-                                Attributes = Attributes + "\"" + Aux + "\"";
-                                Attributes = Attributes + " := " + Args.get(i) + "_" + Aux;
-                                Attributes = Attributes + ",";
-                            }
-                            Aux = Args.get(i) + "_" + Aux;
-                            String currentAction = Acts.get(j).toString().replace(Acts.get(i).getLeft_Side(), Aux);
-                            currentAction = currentAction.substring(currentAction.indexOf("=") + 2, currentAction.length());
+                            String currentAction = Acts.get(j).getRight_Side();
+                            currentAction = currentAction.replace(".", "_");
+                            //currentAction = currentAction.substring(currentAction.indexOf("=") + 2, currentAction.length());
                             if (Recursive.getIndexOfOperator(currentAction, i) == currentAction.length()) {
-                                //System.out.println(currentAction);
                                 Attributes2 = Attributes2 + ": " + currentAction;
                             } else {
-                                Attributes2 = Attributes2 + ": " + Recursive.convertToLispExpression(currentAction, 0, "");
-                                //System.out.println(Recursive.convertToLispExpression(currentAction, 0, ""));
+                                Attributes2 = Attributes2 + ": " + Recursive.convertToLispExpression(currentAction);
                             }
                             Attributes2 = Attributes2 + ",";
                         }
                     }
                 }
-                Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
+                //Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
                 Attributes2 = Attributes2.substring(0, Attributes2.lastIndexOf(","));
-                Attributes = Attributes + " }";
+                //Attributes = Attributes + " }";
                 Attributes2 = Attributes2 + " }";
+                int indexOfEntity = Entity.indexOf(Entities.get(i));
+                List<String>EntityAtts = EntityAttributes.get(indexOfEntity);
+                for (int j = 1; j < EntityAtts.size(); j++) {
+                    Attributes = Attributes + "\"" + EntityAtts.get(j) + "\"" + " := " + Args.get(i)+ "_" + EntityAtts.get(j) + ",";  
+                }
+                Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
+                Attributes = Attributes + "}";
                 PactAtom PR = new PactAtom(Entities.get(i) + "_table " + Args.get(i), Attributes);
                 if (i == 0) {
                     PR.setIndentation(2);
@@ -289,8 +288,6 @@ public class Transpiler extends SmartyBaseListener{
                     PR.setIndentation(3);
                 }
                 PR.chooseCoreFunction(2);
-                //String Compile = PR.Compile();
-                //System.out.println(Compile);
                 Lisp_Reads.add(PR.Compile());
                 PactAtom PU = new PactAtom(Entities.get(i) + "_table " + Args.get(i), Attributes2);
                 PU.setIndentation(4);
@@ -408,8 +405,9 @@ public class Transpiler extends SmartyBaseListener{
             Attributes = Attributes + "}"; 
         } else {
             for (int i = 1; i < EntityAtts.size(); i++) {
-                Attributes = Attributes + "\"" + EntityAtts.get(i) + "\"" + ": " + Args.get(i);  
+                Attributes = Attributes + "\"" + EntityAtts.get(i) + "\"" + ": " + Args.get(i) + ",";  
             }
+            Attributes = Attributes.substring(0, Attributes.lastIndexOf(","));
             Attributes = Attributes + "}";
         }
         PactAtom PI = new PactAtom(searchEntity + "_table" + " " + Args.get(0), Attributes);

@@ -1,0 +1,24 @@
+Item:{Name:string,MAX_BID:decimal}
+Bettor:{Name:string,BID:decimal}
+
+@event bid_for:
+  @args[bettor,item,bid]
+  @subjects[Bettor => Item]
+  @pre bid > item.MAX_BID
+  @fails "Must enter with greater Bid"
+  @action item.MAX_BID := bid
+  @action bettor.BID := bid
+  
+@create_Item:
+  @args[Name,MAX_BID]
+  
+
+@create_Bettor:
+  @args[Name,Bid]
+
+create_Item ["Lamborghini_Veneno",10.0]
+create_Bettor["Pedro",10.0]
+Pedro bid_for Lamborghini_Veneno[10.0]
+create_Bettor["Juan",70.0]
+Juan bid_for Lamborghini_Veneno[70.0]
+get_info_Item["Lamborghini_Veneno"]

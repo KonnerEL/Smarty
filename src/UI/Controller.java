@@ -42,7 +42,8 @@ public class Controller implements Initializable {
                 .getExtensionFilters()
                 .addAll(
                         //new FileChooser.ExtensionFilter("Text", "*.txt"),
-                        new FileChooser.ExtensionFilter("Smarty Contract", "*.sm"));
+                        new FileChooser.ExtensionFilter("Smarty Contract", "*.sm"),
+                        new FileChooser.ExtensionFilter("Pact Contract", "*.pact"));
     }
 
     public void init(Stage myStage) {
@@ -91,7 +92,8 @@ public class Controller implements Initializable {
             if (file != null) {
                 PrintWriter savedText = new PrintWriter(file);
                 BufferedWriter out = new BufferedWriter(savedText);
-                out.write(textArea2.getText());
+                if (textArea2.isFocused()) out.write(textArea2.getText());
+                if (textArea3.isFocused()) out.write(textArea3.getText());
                 out.close();
             }
         } catch (FileNotFoundException e) {
@@ -130,7 +132,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void newFile() {
-        textArea1.clear();
+        textArea2.clear();
     }
 
     @FXML
@@ -214,11 +216,11 @@ public class Controller implements Initializable {
         System.out.println(contract);
         textArea3.setText(contract);
         textArea3.setEditable(false);
-        File pactContract = new File(System.getProperty("user.dir") + "/examples/" + fileName + ".pact");
+        /*File pactContract = new File(System.getProperty("user.dir") + "/examples/" + fileName + ".pact");
 	FileWriter fileWriter = new FileWriter(pactContract);
 	fileWriter.write(contract);
         fileWriter.flush();
-	fileWriter.close();
+	fileWriter.close();*/
         
     }
     

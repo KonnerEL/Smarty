@@ -1,0 +1,19 @@
+Item:{Name:string,Quantity:integer,Price:decimal}
+Customer:{Name:string,Balance:decimal}
+
+@event buy_item:
+  @args[Customer,Item,Quantity]
+  @subjects[Customer => Item]
+  @pre Item.Quantity >= Quantity
+  @fails "Unavailable Item"
+  @pre Item.Price * Quantity <= Customer.Balance
+  @fails "Don't have enough money"
+  @action Item.Quantity := Item.Quantity - Quantity
+  @action Customer.Balance := Customer.Balance - Item.Price * Quantity
+
+@create_Item:
+  @args[Name,Quantity,Price]
+  @invariant Quantity > 0
+  @warning "Quantity always must be > 0"
+  
+create_Item ["Colgate",12,5.000]

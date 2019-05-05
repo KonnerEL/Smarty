@@ -5,6 +5,9 @@
  */
 package Utils;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 /**
  *
  * @author KonnerEL
@@ -37,6 +40,74 @@ public class Recursive {
         }
     }
     
+    public static String convertToLispExpression(String expression) {
+        String[] splittedExpression = expression.split(String.format("((?<=%1$s)|(?=%1$s))", "\\+|\\-|\\*|\\/"));
+        ArrayList<Token>tokens = new ArrayList();
+        for (String part:splittedExpression) {
+            tokens.add(new Token(part));
+        }
+
+        Stack<Token>Values = new Stack();
+        Stack<Token>Operators = new Stack<>();
+        String LispExpression = "";
+        Boolean error = false;
+        for (Token token : tokens) {
+            if (token.getType() == Token.NUMBER) {
+                Values.push(token);
+            } else if (token.getType() == Token.OPERATOR) {
+                if (Operators.isEmpty() || (token.getPrecedence() > Operators.peek().getPrecedence())) {
+                    Operators.push(token);
+                } else {
+                    while (!Operators.isEmpty() && token.getPrecedence() <= Operators.peek().getPrecedence()) {
+                        if (Values.size() >= 2) {
+                            Token SecondOperand = Values.pop();
+                            Token FirstOperand = Values.pop();
+                            Token Operator = Operators.pop();
+                            Values.add(new Token(FirstOperand, Operator, SecondOperand));
+                            LispExpression = "(" + Operator + " " + FirstOperand + " " + SecondOperand + ")";
+                        } else {
+                            error = true;
+                            break;
+                        }
+                    }
+                    Operators.push(token);
+                }
+
+            } else if (token.Type == Token.LEFT_PARENTHESIS) {
+                Operators.push(token);
+            } else if (token.getType() == Token.RIGHT_PARENTHESIS) {
+                while (!Operators.isEmpty() && Operators.peek().getType() == Token.OPERATOR) {
+                    if (Values.size() >= 2) {
+                        Token SecondOperand = Values.pop();
+                        Token FirstOperand = Values.pop();
+                        Token Operator = Operators.pop();
+                        Values.add(new Token(FirstOperand, Operator, SecondOperand));
+                        LispExpression = "(" + Operator + " " + FirstOperand + " " + SecondOperand + ")";
+                    } else {
+                        error = true;
+                        break;
+                    }
+                }
+                if (!Operators.isEmpty() && Operators.peek().getType() == Token.LEFT_PARENTHESIS) {
+                    Operators.pop();
+                } else {
+                    System.out.println("Error: unbalanced parenthesis.");
+                    error = true;
+                }
+            }
+        }
+        while (!Operators.isEmpty() && Operators.peek().getType() == Token.OPERATOR) {
+            if (Values.size() >= 2) {
+                Token SecondOperand = Values.pop();
+                Token FirstOperand = Values.pop();
+                Token Operator = Operators.pop();
+                Values.add(new Token(FirstOperand, Operator, SecondOperand));
+                LispExpression = "(" + Operator + " " + FirstOperand + " " + SecondOperand + ")";
+            }
+        }
+        return LispExpression;
+    } 
+      
     public static Integer getIndexOfOperator(String string, int i) {
         for (int j = i; j < string.length(); j++) {
             String currentChar = string.substring(j, j + 1);

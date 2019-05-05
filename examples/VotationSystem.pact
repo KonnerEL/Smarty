@@ -20,19 +20,22 @@
     )
     (defun create_Candidato (Name Votos)
 
-      (insert Candidato_table Name {"Votos": 0})
+      (insert Candidato_table Name {"Votos": Votos})
     )
 
 
     (defun voted_for (votante candidato)
-      (with-read Votante_table votante {"Voted" := votante_Voted }
-       (with-read Candidato_table candidato {"Votos" := candidato_Votos }
-
+      (with-read Votante_table votante {"Voted" := votante_Voted}
+       (with-read Candidato_table candidato {"Votos" := candidato_Votos}
+        (enforce (!= votante_Voted true) "El Votante ya ha votado")
         (update Votante_table votante {"Voted": true })
-        (update Candidato_table candidato {"Votos": (+ candidato_Votos 1),"Name": "Candidato" })))
+        (update Candidato_table candidato {"Votos": (+ candidato_Votos 1) })))
     )
 
-
+    (defun get_info_Candidato (ID1)
+      (with-read Candidato_table ID1 {"Votos" := ID1_Votos}
+       (format " {} - {} " [ID1,ID1_Votos]))
+    )
  )
 
 ( create-table Votante_table )
@@ -44,3 +47,4 @@
 ( voted_for "Andres" "Nestor")
 ( voted_for "Jose" "Nestor")
 ( voted_for "Juan" "Nestor")
+( get_info_Candidato "Nestor")
