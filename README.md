@@ -12,7 +12,7 @@ All Smart Contract is composed by:
   
   Let's consider an example of a Bank Account.
   
-  A Bank Account have attributes such as: Name of Account Owner, Account Balance, for now let's concentrate in just these attributes.
+  A Bank Account have attributes such as: Account owner name, Account balance, for now let's concentrate in just these attributes.
   A Entity should look like this:
 
   ```haskell
