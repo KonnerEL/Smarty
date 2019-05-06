@@ -29,7 +29,7 @@ All Smart Contract is composed by:
   
 - Events: They are analagous to the Functions and Methods on many Programming Languages. There are two Events Types:
   
-  - Creational Events: These events begin with `@create_` + **Entity Identifier**. In the body of these events must be specified the *Arguments*, *Invariants* and *Warnings* (These two are optional). If we want that an Account must be charged with a Initial balance. We should use an `@invariant` with an `@warning` that send an Exception if the condition in the Invariant is not accomplished. Creational Events are like the Constructor Methods in the OOP Languages. A Creational Event should look this:
+  - Creational Events: These events begin with `@create_` + **Entity Identifier**. In the body of these events must be specified the *Arguments*, *Invariants* and *Warnings* (These two are optional). If we want that an Account must be charged with a Initial balance. We should use an `@invariant` with an `@warning` that send an Exception if the condition in the Invariant is not accomplished (for each invariant, exists a warning). Creational Events are like the Constructor Methods in the OOP Languages. A Creational Event should look this:
   
   ```java
     @create_Account:
@@ -39,12 +39,12 @@ All Smart Contract is composed by:
   ```
   The following table shows the optional and mandatory keywords that must contain these event types:
 
-  |         | Optional           | Mandatory  |
-  | ------------- |:-------------:| -----:|
-  | `@args`      |  | :white_check_mark: |
-  | `@invariant`      | centered      |   $12 |
-  | `@warning` | are neat      |    $1 |
-  | `@action`  |               |       |  
+  |               | Optional           | Mandatory          |
+  | :------------ | :----------------: | :----------------: |
+  | `@args`       |                    | :white_check_mark: |
+  | `@invariant`  | :white_check_mark: |                    |
+  | `@warning`    | :white_check_mark: |                    |
+  | `@action`     | :white_check_mark: |                    |  
 
 
 
