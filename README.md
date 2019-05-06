@@ -65,6 +65,7 @@ All Smart Contract is composed by:
     -  __(WIP)__ Postconditions: Guard conditions that check if an action has failed. If the result is *false*, then an action can be reverted using the keyword `@reverts`.
 
     The following table shows the optional and mandatory keywords that must contain these event types:
+    
     |               | Optional           | Mandatory          |
     | :------------ | :----------------: | :----------------: |
     | `@args`       | :white_check_mark: |                    |
