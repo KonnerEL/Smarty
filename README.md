@@ -50,7 +50,31 @@ All Smart Contract is composed by:
 
 <!--  ![](https://i.imgur.com/5Iy7izf.png) -->
     
-  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions (*fails*), actions (`@action`) and *Postconditions* (WIP)
+  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions, *actions* and *Postconditions*.
+
+    - Arguments: Parameters need by the Event.
+    - Subjects: Entities relationated by the Event.
+    - Preconditions: Necessary conditions for the Event execution. They are similar to the invariants of the creational events. Preconditions must be written with their respective exceptions using the keyword `@fails`.
+    - Actions: Expressions that update states of the attributes of an instance. An action not only can be an assigments, also can show Messages. For example, a Hello World:
+
+    ```java
+        @event hello_world:
+            @action Write "Hello World"
+    ```
+    
+    -  __(WIP)__ Postconditions: Guard conditions that check if an action has failed. If the result is *false*, then an action can be reverted using the keyword `@reverts`.
+
+    The following table shows the optional and mandatory keywords that must contain these event types:
+    |               | Optional           | Mandatory          |
+    | :------------ | :----------------: | :----------------: |
+    | `@args`       | :white_check_mark: |                    |
+    | `@subjects`   | :white_check_mark: |                    |
+    | `@pre`        | :white_check_mark: |                    |
+    | `@action`     |                    | :white_check_mark: |
+    | `@post`       | :white_check_mark: |                    |
+
+
+Let's consider the example of an Account System and **transfer** operation. A Custom Event for this operation should look like this:
 
 ```java
     @event transfer_to:
@@ -72,3 +96,23 @@ If the relationated entities are the same type, we can re-write `@subjects` on t
 ```java 
     @subjects[Account]
 ```
+
+We are ready to invoke some events.
+
+```ocaml
+    create_Account [Jose,100.25]
+    create_Account [Nestor,250.0]
+    Jose transfer_to Nestor [25.0]
+    get_info_Account [Nestor, Jose]
+```
+
+If we want to retrieve Information from an Entity instance, we must use Getters Events (They are defined inside the Language, so they can't be specified as the creational and custom events). The sintaxis of these Events is the following:
+    `get_info_` + **Entity Identifier** `[Instance1,...,InstanceN]`.
+
+**Note:** If a Custom Event has Arguments, the first two Parameters represent two instance of the two relationated entities. For example `Jose` and `Nestor` represent the two instances of the `Account` Entity. The `transfer_to` Event, is the Event that matches these instances, like a real contract does. Between the Brackets, the remaining Parameters are received.
+
+---
+For more examples, please go to:
+
+[Examples](/examples)
+
