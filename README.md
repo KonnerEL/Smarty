@@ -50,7 +50,7 @@ All Smart Contract is composed by:
 
 <!--  ![](https://i.imgur.com/5Iy7izf.png) -->
     
-  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions (*fails*), actions (`@action`) 
+  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions (*fails*), actions (`@action`) and *Postconditions* (WIP)
 
 ```java
     @event transfer_to:
