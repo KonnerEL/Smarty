@@ -66,13 +66,15 @@ All Smart Contract is composed by:
 
     The following table shows the optional and mandatory keywords that must contain these event types:
     
-    |               | Optional           | Mandatory          |
+    |                 | Optional           | Mandatory          |
     | :------------ | :----------------: | :----------------: |
     | `@args`       | :white_check_mark: |                    |
     | `@subjects`   | :white_check_mark: |                    |
     | `@pre`        | :white_check_mark: |                    |
+    | `@fails`      | :white_check_mark: |                    |
     | `@action`     |                    | :white_check_mark: |
     | `@post`       | :white_check_mark: |                    |
+    | `@reverts`    | :white_check_mark: |                    |
 
 
 Let's consider the example of an Account System and **transfer** operation. A Custom Event for this operation should look like this:
