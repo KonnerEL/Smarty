@@ -45,12 +45,30 @@ All Smart Contract is composed by:
   | `@invariant`  | :white_check_mark: |                    |
   | `@warning`    | :white_check_mark: |                    |
   | `@action`     | :white_check_mark: |                    |  
-
+  
 
 
 <!--  ![](https://i.imgur.com/5Iy7izf.png) -->
     
-  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions*, the exceptions (*fails*), actions (`@action`) 
+  - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions (*fails*), actions (`@action`) 
 
+```java
+    @event transfer_to:
+        @args[from,to,amount]
+        @subjects[Account => Account]
+        @pre amount > 0.0
+        @fails "Negative Transaction Amount"
+        @pre from.Balance >= amount
+        @fails "Insufficient Funds"
+        @action from.Balance := from.Balance - amount
+        @action to.Balance := to.Balance + amount
+        @post @after.from.Balance = @before.from.Balance - amount
+        @reverts
+        @post @after.to.Balance = @before.to.Balance + amount
+        @reverts
+```
 
-
+If the relationated entities are the same type, we can re-write on the following way: 
+```java 
+    @subjects[Account]
+```
