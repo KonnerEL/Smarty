@@ -68,7 +68,7 @@ All Smart Contract is composed by:
         @reverts
 ```
 
-If the relationated entities are the same type, we can re-write on the following way: 
+If the relationated entities are the same type, we can re-write `@subjects` on the following way: 
 ```java 
     @subjects[Account]
 ```
