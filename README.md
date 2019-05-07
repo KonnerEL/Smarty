@@ -127,7 +127,7 @@ We use the following Tools:
 
  [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/): To build the template needed for the Translation to the Pact Language.
 
- ![Java](https://www.cunix.net/wp-content/uploads/2016/01/java1.png | width=50): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
+ ![Java](https://cdn.iconscout.com/icon/free/png-256/java-60-1174953.png): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
 
 ---
 On this [Link](/store) you can find a tool that allows write contracts with Smarty and then be transpiled to Pact.
