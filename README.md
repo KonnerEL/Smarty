@@ -122,12 +122,12 @@ This is a proposal of a Smart Contract Language. For now the Language doesn't ha
 
 We use the following Tools:
 
- 1. [![ANTLR](https://www.antlr.org/images/antlr-logo.png)](https://www.antlr.org/): To define the Grammar of the Language and generate the Parser and Lexer classes.
+ [![ANTLR](https://www.antlr.org/images/antlr-logo.png)](https://www.antlr.org/): To define the Grammar of the Language and generate the Parser and Lexer classes.
  Here you can find the BNF of the Language: [*Grammar*](/src/Smarty/Smarty.g4)
 
- 2. [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/): To build the template needed for the Translation to the Pact Language.
+ [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/): To build the template needed for the Translation to the Pact Language.
 
- 3. ![Java](https://www.cunix.net/wp-content/uploads/2016/01/java1.png): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
+ ![Java](https://www.cunix.net/wp-content/uploads/2016/01/java1.png | width=50): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
 
 ---
 On this [Link](/store) you can find a tool that allows write contracts with Smarty and then be transpiled to Pact.
