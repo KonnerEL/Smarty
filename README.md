@@ -1,5 +1,5 @@
 # Smarty
-A Smart Contract Language based on design by contract and Event-B.
+A Smart Contract Language based on Design by Contract and Event-B.
 
 ## Structure of Smart Contracts on Smarty
 
@@ -7,12 +7,12 @@ The idea of the Language is to make a representation of the real-life contracts.
 
 All Smart Contract is composed by:
 
-- Entities: They are very similar to the Tables on SQL Data Models and `struct` Data Structures on C and C++. 
-  They have a name and fields with their respectives Types. 
+- Entities: They are very similar to the **Tables** on SQL Data Models and `struct` Data Structures on C and C++ and **Classes** in OOP Languages.
+  They have a name and fields with their respectives types. 
   
   Let's consider an example of a Bank Account.
   
-  A Bank Account have attributes such as: Name of Account Owner, Account Balance, for now let's concentrate in just these attributes.
+  A Bank Account have attributes such as: Account owner name, Account balance, for now let's concentrate in just these attributes.
   An Entity should look like this:
 
   ```haskell
@@ -45,11 +45,7 @@ All Smart Contract is composed by:
   | `@invariant`  | :white_check_mark: |                    |
   | `@warning`    | :white_check_mark: |                    |
   | `@action`     | :white_check_mark: |                    |  
-  
-
-
-<!--  ![](https://i.imgur.com/5Iy7izf.png) -->
-    
+      
   - Custom Events: These events are defined by the user. In the body of these events must be specified the *Arguments*, the relationated entities (*Subjects*), *Preconditions* with the exceptions, *actions* and *Postconditions*.
 
     - Arguments: Parameters need by the Event.
@@ -65,6 +61,7 @@ All Smart Contract is composed by:
     -  __(WIP)__ Postconditions: Guard conditions that check if an action has failed. If the result is *false*, then an action can be reverted using the keyword `@reverts`.
 
     The following table shows the optional and mandatory keywords that must contain these event types:
+
     |               | Optional           | Mandatory          |
     | :------------ | :----------------: | :----------------: |
     | `@args`       | :white_check_mark: |                    |
@@ -109,12 +106,12 @@ We are ready to invoke some events.
 If we want to retrieve Information from an Entity instance, we must use Getters Events (They are defined inside the Language, so they can't be specified as the creational and custom events). The sintaxis of these Events is the following:
     `get_info_` + **Entity Identifier** `[Instance1,...,InstanceN]`.
 
-**Note:** If a Custom Event has Arguments, the first two Parameters represent two instance of the two relationated entities. For example `Jose` and `Nestor` represent the two instances of the `Account` Entity. The `transfer_to` Event, is the Event that matches these instances, like a real contract does. Between the Brackets, the remaining Parameters are received.
+**Note:** If a Custom Event has Arguments, the first two Parameters represent two instances of the two relationated entities. For example `Jose` and `Nestor` represent the two instances of the `Account` Entity. The `transfer_to` Event, is the Event that matches these instances, like a real contract does. Between the Brackets, the remaining Parameters are received.
 
----
+-------
 For more examples, please go to: [**Examples**](/examples)
 
----
+-------
 
 ## Implementation Details
 
@@ -122,12 +119,18 @@ This is a proposal of a Smart Contract Language. For now the Language doesn't ha
 
 We use the following Tools:
 
- [![ANTLR](https://www.antlr.org/images/antlr-logo.png)](https://www.antlr.org/): To define the Grammar of the Language and generate the Parser and Lexer classes.
- Here you can find the BNF of the Language: [*Grammar*](/src/Smarty/Smarty.g4)
+ [![ANTLR](https://www.antlr.org/images/antlr-logo.png)](https://www.antlr.org/)
+ ___
+ To define the Grammar of the Language and generate the Parser and Lexer classes.
+ [*Here*](/src/Smarty/Smarty.g4) you can find the Grammar of the Language as a BNF.
 
- [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/): To build the template needed for the Translation to the Pact Language.
+ [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/)
+ ___
+ To build the template needed for the Translation to the Pact Language.
 
- ![Java](https://cdn.iconscout.com/icon/free/png-256/java-60-1174953.png): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
+ ![Java](https://cdn.iconscout.com/icon/free/png-256/java-60-1174953.png)
+ ___
+ To work with the Listener that extracts the tokens and visits the Syntantic Tree.
 
----
+-------
 On this [Link](/store) you can find a tool that allows write contracts with Smarty and then be transpiled to Pact.
