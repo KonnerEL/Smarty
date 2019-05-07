@@ -12,8 +12,8 @@ All Smart Contract is composed by:
   
   Let's consider an example of a Bank Account.
   
-  A Bank Account have attributes such as: Account owner name, Account balance, for now let's concentrate in just these attributes.
-  A Entity should look like this:
+  A Bank Account have attributes such as: Name of Account Owner, Account Balance, for now let's concentrate in just these attributes.
+  An Entity should look like this:
 
   ```haskell
     Account:{Name:string,Balance:decimal}
@@ -65,16 +65,13 @@ All Smart Contract is composed by:
     -  __(WIP)__ Postconditions: Guard conditions that check if an action has failed. If the result is *false*, then an action can be reverted using the keyword `@reverts`.
 
     The following table shows the optional and mandatory keywords that must contain these event types:
-    
-    |                 | Optional           | Mandatory          |
+    |               | Optional           | Mandatory          |
     | :------------ | :----------------: | :----------------: |
     | `@args`       | :white_check_mark: |                    |
     | `@subjects`   | :white_check_mark: |                    |
     | `@pre`        | :white_check_mark: |                    |
-    | `@fails`      | :white_check_mark: |                    |
     | `@action`     |                    | :white_check_mark: |
     | `@post`       | :white_check_mark: |                    |
-    | `@reverts`    | :white_check_mark: |                    |
 
 
 Let's consider the example of an Account System and **transfer** operation. A Custom Event for this operation should look like this:
@@ -115,7 +112,22 @@ If we want to retrieve Information from an Entity instance, we must use Getters 
 **Note:** If a Custom Event has Arguments, the first two Parameters represent two instance of the two relationated entities. For example `Jose` and `Nestor` represent the two instances of the `Account` Entity. The `transfer_to` Event, is the Event that matches these instances, like a real contract does. Between the Brackets, the remaining Parameters are received.
 
 ---
-For more examples, please go to:
+For more examples, please go to: [**Examples**](/examples)
 
-[Examples](/examples)
+---
 
+## Implementation Details
+
+This is a proposal of a Smart Contract Language. For now the Language doesn't have an execution environment. We use Pact (another Smart Contract Language) as a Test Language for contracts written with Smarty.
+
+We use the following Tools:
+
+ 1. [![ANTLR](https://www.antlr.org/images/antlr-logo.png)](https://www.antlr.org/): To define the Grammar of the Language and generate the Parser and Lexer classes.
+ Here you can find the BNF of the Language: [*Grammar*](/src/Smarty/Smarty.g4)
+
+ 2. [![String Template](https://www.stringtemplate.org/images/st-logo.png)](https://www.stringtemplate.org/): To build the template needed for the Translation to the Pact Language.
+
+ 3. ![Java](https://www.cunix.net/wp-content/uploads/2016/01/java1.png): To work with the Listener that extracts the tokens and visits the Syntantic Tree.
+
+---
+On this [Link](/store) you can find a tool that allows write contracts with Smarty and then be transpiled to Pact.
