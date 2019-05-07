@@ -132,5 +132,5 @@ We use the following Tools:
  ___
  To work with the Listener that extracts the tokens and visits the Syntantic Tree.
 
--------
+## Tools
 On this [Link](/store) you can find a tool that allows write contracts with Smarty and then be transpiled to Pact.
