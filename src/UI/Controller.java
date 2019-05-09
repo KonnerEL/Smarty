@@ -28,7 +28,6 @@ public class Controller implements Initializable {
 
     @FXML private TextArea textArea1;
     @FXML private TextArea textArea2;
-    @FXML private TextArea textArea3;
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
     ParseTree tree;
@@ -48,12 +47,6 @@ public class Controller implements Initializable {
 
     public void init(Stage myStage) {
         this.stage = myStage;
-        
-        File file = new File(System.getProperty("user.dir") + "/src/Smarty/Smarty.g4");
-        if (file != null) {
-            textArea1.clear();
-            readText(file, textArea1);
-        }
     }
 
     @FXML
@@ -92,8 +85,8 @@ public class Controller implements Initializable {
             if (file != null) {
                 PrintWriter savedText = new PrintWriter(file);
                 BufferedWriter out = new BufferedWriter(savedText);
+                if (textArea1.isFocused()) out.write(textArea1.getText());
                 if (textArea2.isFocused()) out.write(textArea2.getText());
-                if (textArea3.isFocused()) out.write(textArea3.getText());
                 out.close();
             }
         } catch (FileNotFoundException e) {
@@ -109,8 +102,8 @@ public class Controller implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
         fileName = file.getName().substring(0, file.getName().indexOf("."));
         if (file != null) {
-            textArea2.clear();
-            readText(file, textArea2);
+            textArea1.clear();
+            readText(file, textArea1);
         }
     }
 
@@ -132,7 +125,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void newFile() {
-        textArea2.clear();
+        textArea1.clear();
     }
 
     @FXML
@@ -155,22 +148,18 @@ public class Controller implements Initializable {
             case "small":
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-size: 14px");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-size: 14px");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-size: 14px");
                 break;
             case "default":
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-size: 22px");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-size: 22px");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-size: 22px");
                 break;
             case "large":
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-size: 30px");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-size: 30px");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-size: 30px");
                 break;
             default:
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-size: 22px");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-size: 22px");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-size: 22px");
                 break;
         }
     }
@@ -183,17 +172,14 @@ public class Controller implements Initializable {
             case "Consolas":
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-family: Consolas");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-family: Consolas");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-family: Consolas");
                 break;
             case "Courier":
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-family: Courier New");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-family: Courier New");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-family: Courier New");
                 break;
             default:
                 if (textArea1.isFocused()) textArea1.setStyle("-fx-font-family: SansSerif");
                 if (textArea2.isFocused()) textArea2.setStyle("-fx-font-family: SansSerif");
-                if (textArea3.isFocused()) textArea3.setStyle("-fx-font-family: SansSerif");
                 break;   
         }
     }
@@ -203,7 +189,8 @@ public class Controller implements Initializable {
         //File f = new File(System.getProperty("user.dir") + "/examples/AccountSystem.sm");
         //File f = new File(args[0]);
         //FileInputStream fis = new FileInputStream(f);
-        ANTLRInputStream input = new ANTLRInputStream(textArea2.getText());
+        textArea2.clear();
+        ANTLRInputStream input = new ANTLRInputStream(textArea1.getText());
         SmartyLexer lexer = new SmartyLexer(input);
         TokenStream tokens = new CommonTokenStream(lexer);
         parser = new SmartyParser(tokens);
@@ -214,14 +201,21 @@ public class Controller implements Initializable {
         tr.buildPactSintax();
         String contract = tr.getProgram();
         System.out.println(contract);
-        textArea3.setText(contract);
-        textArea3.setEditable(false);
+        textArea2.setText(contract);
         /*File pactContract = new File(System.getProperty("user.dir") + "/examples/" + fileName + ".pact");
 	FileWriter fileWriter = new FileWriter(pactContract);
 	fileWriter.write(contract);
         fileWriter.flush();
 	fileWriter.close();*/
         
+    }
+    
+    @FXML 
+    public void ShowGrammar() {
+        File file = new File(Controller.class.getResource("/Smarty/Smarty.g4").getFile());
+        if (file != null) {
+            readText(file, textArea2);
+        }
     }
     
     @FXML

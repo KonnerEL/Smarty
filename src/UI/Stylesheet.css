@@ -4,10 +4,12 @@
 }
 
 .text-area {
-    -fx-text-fill: #00CC00;
+    -fx-text-fill: #808080;
     -fx-font-size: 20;
     -fx-font-family: "Consolas";
     -fx-focus-color: transparent;
+    -fx-background-radius: 0.0px;
+    -fx-border-radius: 0.0px;
 }
 
 
@@ -15,20 +17,46 @@
     -fx-text-fill: #D1D6C5;
 }
 
-menu-bar:hover, .menu-item:hover{
+.menu-item:hover{
     -fx-background-color: #404552;
 }
 
 .menu-bar {
-    -fx-background-color: #2F343F;
+    -fx-background-color: #DBDBDB;
     -fx-font-size: 16;
     -fx-font-family: "Consolas";
 }
 
 
 .text-area .content {
-    -fx-background-color: #393939
+    -fx-background-color: #FFFFFF
 
+}
+
+.vbox {
+    -fx-background-color: #D9D9D9
+}
+
+.button1:hover, .button2:hover, .button3:hover {
+    -fx-background-color: #676E73;
+}
+
+.button1 {
+    -fx-background-image: url('Icons/GrammarIcon.png');
+    -fx-background-size: 32;
+    -fx-background-color: #D9D9D9;
+}
+
+.button2 {
+    -fx-background-image: url('Icons/TranspileIcon.png');
+    -fx-background-size: 32;
+    -fx-background-color: #D9D9D9;
+}
+
+.button3 {
+    -fx-background-image: url('Icons/SyntacticTreeIcon.png');
+    -fx-background-size: 32;
+    -fx-background-color: #D9D9D9;
 }
 
 /*TODO right clicking on textArea didn't have the desired CSS effect, figure out why and replace this template
@@ -44,9 +72,9 @@ menu-bar:hover, .menu-item:hover{
 
 /* VARIABLE DEFINITIONS: Only these 4 variables have to be adjusted, the rest is copy-paste */
 * {
-    -fx-my-menu-color: #2F343F;                /* Change according to your needs */
+    -fx-my-menu-color: #DBDBDB;                /* Change according to your needs */
     -fx-my-menu-color-highlighted: #404552;     /* Change according to your needs */
-    -fx-my-menu-font-color: #D1D6C5;           /* Change according to your needs */
+    -fx-my-menu-font-color: #2C2C2C;           /* Change according to your needs */
     -fx-my-menu-font-color-highlighted: #D1D6C5; /* Change according to your needs */
 }
 

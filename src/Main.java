@@ -21,7 +21,7 @@ public class Main extends Application {
         Controller controller = fxmlLoader.getController();
         controller.init(myStage);
         
-        myStage.setTitle("JavaFX Text Editor");
+        myStage.setTitle("Smarty Editor");
         myStage.setMaximized(true);
         myStage.setScene(new Scene(root));
         myStage.show();
