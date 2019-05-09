@@ -112,8 +112,20 @@ public class Controller implements Initializable {
     private void readText(File file, TextArea textArea) {
         String text;
 
-        try (BufferedReader buffReader = new BufferedReader(new FileReader(file))) {
-            while ((text = buffReader.readLine()) != null) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((text = reader.readLine()) != null) {
+                textArea.appendText(text + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void readText(InputStream is, TextArea textArea) {
+        String text;
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            while ((text = reader.readLine()) != null) {
                 textArea.appendText(text + "\n");
             }
         } catch (IOException e) {
@@ -212,10 +224,8 @@ public class Controller implements Initializable {
     
     @FXML 
     public void ShowGrammar() {
-        File file = new File(Controller.class.getResource("/Smarty/Smarty.g4").getFile());
-        if (file != null) {
-            readText(file, textArea2);
-        }
+        textArea2.clear();
+        readText(getClass().getResourceAsStream("/Smarty/Smarty.g4"), textArea2);
     }
     
     @FXML
