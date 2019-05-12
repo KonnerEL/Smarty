@@ -4,7 +4,7 @@
 }
 
 .text-area {
-    -fx-text-fill: #808080;
+    -fx-text-fill: #000;
     -fx-font-size: 20;
     -fx-font-family: "Consolas";
     -fx-focus-color: transparent;
@@ -24,7 +24,7 @@
 .menu-bar {
     -fx-background-color: #DBDBDB;
     -fx-font-size: 16;
-    -fx-font-family: "Consolas";
+    -fx-font-family: "Helvetica"
 }
 
 

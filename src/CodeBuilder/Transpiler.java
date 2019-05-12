@@ -212,7 +212,6 @@ public class Transpiler extends SmartyBaseListener{
                 LinkedHashMap<String,String>Attributes = new LinkedHashMap();
                 for (int j = 1; j < EntityAttributes.get(i).size(); j++) {
                     Attributes.put(EntityAttributes.get(i).get(j), EntityTypes.get(i).get(j));
-                    //System.out.println(EntityAttributes.get(i).get(j));
                 }
                 Schemas += new PactSchema(Entity.get(i), Attributes).Compile() + "\n\n" ;
             }
@@ -297,8 +296,6 @@ public class Transpiler extends SmartyBaseListener{
             }
         }   
         for (int i = 0; i < Precs.size(); i++) {
-            //String Attribute = Precs.get(i).toString();
-            //System.out.println(Attribute);
             String Aux = "";
             if (Precs.get(i).getLeft_Side().contains(".")) {
                 int index = Precs.get(i).getLeft_Side().lastIndexOf(".");
@@ -346,8 +343,6 @@ public class Transpiler extends SmartyBaseListener{
         List<String>Lisp_Invariants = new ArrayList<>();
         if (Invs.size() > 0) {
             for (int i = 0; i < Invs.size(); i++) {
-                //String Attribute = Precs.get(i).toString();
-                //System.out.println(Attribute);
                 String Aux = "";
                 if (Invs.get(i).getLeft_Side().contains(".")) {
                     int index = Invs.get(i).getLeft_Side().lastIndexOf(".");

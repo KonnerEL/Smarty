@@ -14,13 +14,13 @@
     (deftable Candidato_table:{Candidato})
 
 
-    (defun create_Votante (Name Voted)
+    (defun create_Votante (Name)
 
-      (insert Votante_table Name {"Voted": Voted})
+      (insert Votante_table Name {"Voted": false})
     )
-    (defun create_Candidato (Name Votos)
+    (defun create_Candidato (Name)
 
-      (insert Candidato_table Name {"Votos": Votos})
+      (insert Candidato_table Name {"Votos": 0})
     )
 
 
@@ -40,10 +40,10 @@
 
 ( create-table Votante_table )
 ( create-table Candidato_table )
-( create_Votante "Andres" false)
-( create_Votante "Jose" false)
-( create_Votante "Juan" false)
-( create_Candidato "Nestor" 0)
+( create_Votante "Andres")
+( create_Votante "Jose")
+( create_Votante "Juan")
+( create_Candidato "Nestor")
 ( voted_for "Andres" "Nestor")
 ( voted_for "Jose" "Nestor")
 ( voted_for "Juan" "Nestor")

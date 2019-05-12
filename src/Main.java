@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -20,10 +21,14 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         controller.init(myStage);
-        
+        myStage.initStyle(StageStyle.UTILITY);
         myStage.setTitle("Smarty Editor");
-        myStage.setMaximized(true);
+        //myStage.setMaximized(true);
+        myStage.setFullScreen(true);
+        myStage.setFullScreenExitHint("");
         myStage.setScene(new Scene(root));
         myStage.show();
     }
+    
+    
 }

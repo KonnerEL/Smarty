@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import javafx.scene.control.TitledPane;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -28,6 +29,7 @@ public class Controller implements Initializable {
 
     @FXML private TextArea textArea1;
     @FXML private TextArea textArea2;
+    @FXML private TitledPane titledPane;
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
     ParseTree tree;
@@ -88,6 +90,8 @@ public class Controller implements Initializable {
                 if (textArea1.isFocused()) out.write(textArea1.getText());
                 if (textArea2.isFocused()) out.write(textArea2.getText());
                 out.close();
+                fileName = file.getName();
+                titledPane.setText(fileName);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
@@ -104,6 +108,8 @@ public class Controller implements Initializable {
         if (file != null) {
             textArea1.clear();
             readText(file, textArea1);
+            fileName = file.getName();
+            titledPane.setText(fileName);
         }
     }
 
@@ -233,4 +239,5 @@ public class Controller implements Initializable {
         TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
         viewr.open();
     }
+    
 }

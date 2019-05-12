@@ -10,15 +10,17 @@ Candidato:{Name:string,Votos:integer}
     @action candidato.Votos := candidato.Votos + 1
 
 @create_Votante:
-    @args[Name,Voted]
+    @args[Name]
+    @action Voted := false
 
 @create_Candidato:
-    @args[Name,Votos]    
+    @args[Name]
+    @action Votos := 0    
 
-create_Votante [Andres,false]
-create_Votante [Jose,false]
-create_Votante [Juan,false]
-create_Candidato [Nestor,0]
+create_Votante [Andres]
+create_Votante [Jose]
+create_Votante [Juan]
+create_Candidato [Nestor]
 Andres voted_for Nestor
 Jose voted_for Nestor
 Juan voted_for Nestor
