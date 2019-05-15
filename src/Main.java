@@ -21,11 +21,11 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         controller.init(myStage);
-        myStage.initStyle(StageStyle.UTILITY);
+        myStage.initStyle(StageStyle.UNDECORATED);
         myStage.setTitle("Smarty Editor");
-        //myStage.setMaximized(true);
-        myStage.setFullScreen(true);
-        myStage.setFullScreenExitHint("");
+        myStage.setMaximized(true);
+        //myStage.setFullScreen(true);
+        //myStage.setFullScreenExitHint("");
         myStage.setScene(new Scene(root));
         myStage.show();
     }
