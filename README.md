@@ -29,7 +29,7 @@ All Smart Contract is composed by:
   
 - Events: They are analagous to the Functions and Methods on many Programming Languages. There are two Events Types:
   
-  - Creational Events: These events begin with `@create_` + **Entity Identifier**. In the body of these events must be specified the *Arguments*, *Invariants* and *Warnings* (These two are optional). If we want that an Account must be charged with a Initial balance. We should use an `@invariant` with an `@warning` that send an Exception if the condition in the Invariant is not accomplished (for each invariant, exists a warning). Creational Events are like the Constructor Methods in the OOP Languages. A Creational Event should look this:
+  - Creational Events: These events begin with `@create_` + **Entity Identifier**. In the body of these events must be specified the *Arguments*, *Actions*, *Invariants* and *Warnings* (These two are optional). If we want that an Account must be charged with a Initial balance. We should use an `@invariant` with an `@warning` that send an Exception if the condition in the Invariant is not accomplished (for each invariant, exists a warning). Actions are used if we want to initialize an Entity Attribute for any Entity Instance. Creational Events are like the Constructor Methods in the OOP Languages. A Creational Event should look this:
   
   ```java
     @create_Account:
@@ -37,6 +37,19 @@ All Smart Contract is composed by:
         @invariant initial_balance > 0.0
         @warning "Initial balance must be >= 0"
   ```
+  
+  Or Like this:
+  
+  ```java
+    @create_Votante:
+      @args[Name]
+      @action Voted := false
+
+    @create_Candidato:
+      @args[Name]
+      @action Votos := 0 
+  ```
+  
   The following table shows the optional and mandatory keywords that must contain these event types:
 
   |               | Optional           | Mandatory          |
