@@ -21,7 +21,7 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         Controller controller = fxmlLoader.getController();
         controller.init(myStage);
-        myStage.initStyle(StageStyle.UNDECORATED);
+        //myStage.initStyle(StageStyle.UNDECORATED);
         myStage.setTitle("Smarty Editor");
         myStage.setMaximized(true);
         //myStage.setFullScreen(true);
