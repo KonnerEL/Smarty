@@ -236,6 +236,11 @@ public class Controller implements Initializable {
     
     @FXML
     public void ShowST() {
+        ANTLRInputStream input = new ANTLRInputStream(textArea1.getText());
+        SmartyLexer lexer = new SmartyLexer(input);
+        TokenStream tokens = new CommonTokenStream(lexer);
+        parser = new SmartyParser(tokens);
+        tree = parser.contractDefinition();
         TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
         viewr.open();
     }
